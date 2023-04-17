@@ -1,0 +1,151 @@
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+></script>
+<script>
+
+  NioApp.DataTable(".datatable-init-confirmation", {
+      responsive: {
+        details: true,
+      },
+  })
+  let searchOption = {
+    dateRangeData: {
+      grantDate: {
+        from: "2020-01-01",
+        to: "2022-03-04",
+      },
+    },
+    recordTotalQuantity: 50,
+  };
+  let searchBtn = $(".search-button");
+  let link = "https://developer.uspto.gov/ipmarketplace-api/search/filters";
+  let searchData = [];
+
+  $(searchBtn).click(async function () {
+    try {
+      let res = await axios.post(link, searchOption);
+      searchData = res.data.results;
+      $(".datatable-init-confirmation").html(tableStructure());
+      searchData.forEach(patentsItem);
+
+      DataTables(
+        res.data.recordTotalQuantity
+      );
+    } catch (error) {
+      console.log("Error", error.response);
+    }
+    // res.data.data.forEach(productsItem);
+  });
+
+  function patentsItem(e, i) {
+    $("tbody").append(`
+       <tr>
+        <td><p style="white-space:normal;max-width:90%">${e.inventionTitle ?? "--"}</p></td>
+        <td>${e.patentNumber ?? "--"}</td>
+        <td>${bz.dateF(e.grantDate)}</td>
+        <td class="lively">${e.licenseeContactEmailAddressText ?? "--"}</td>
+        <td class="lively">${e.licenseeContactPhoneNumber ?? "--"}</td>
+        <td>${e.firstInventorName ?? "--"}</td>
+        <td>${e.inventorNameText ?? "--"}</td>
+        <td><a href="${e.licenseeContactWebAddressURI ?? "#"}">Website</a></td>
+        </tr>
+    `);
+  }
+
+  function DataTables(total) {
+    console.log(total);
+    NioApp.DataTable(".datatable-init-confirmation", {
+      responsive: {
+        details: true,
+      },
+      ordering: true,
+      recordsTotal: total,
+
+      //   columnDefs: [
+      //     { orderable: true, targets: [2] },
+      //     {
+      //       targets: [10],
+      //       render: function (data, type, row, meta) {
+      //         return type === "display"
+      //           ? data
+      //             ? `<a href="${data}" target="_blank">○</a>`
+      //             : ""
+      //           : data;
+      //       },
+      //     },
+      //     { orderable: false, targets: "_all" },
+      //   ],
+      //   order: [[2, "asc"]],
+        lengthMenu: [
+          [50, -1],
+          [50, -1],
+        ],
+      deferLoading: total,
+      pageLength: 50,
+      serverSide: true,
+      ajax: {
+        url: "/search/ajax",
+        type: "POST",
+        data: searchOption,
+      },
+      destroy: true,
+
+      // buttons: [
+      //   "excel",
+      //   {
+      //     extend: "csv",
+      //     charset: "UTF-8",
+      //     bom: true,
+      //     text: "Copy all data",
+      //     exportOptions: {
+      //       modifier: {
+      //         search: "none",
+      //       },
+      //       orthogonal: "csv",
+      //     },
+      //   },
+      // ],
+    });
+  }
+
+  function tableStructure() {
+    return `
+    <thead>
+        <tr>
+            <th>Invention Title </th>
+            <th>Patent Number </th>
+            <th>Grant Date </th>
+            <th>Email Address</th>
+            <th>Phone Number</th>
+            <th>First Inventor Name</th>
+            <th>Inventor Name</th>
+            <th>Website URL</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    `;
+  }
+
+  $("#dates").daterangepicker(
+    {
+      locale: {
+        format: "MM/DD/YYYY",
+        separator: " - ",
+      },
+    },
+    function (start, end, label) {
+      searchOption.dateRangeData.grantDate.from = start.format("YYYY-MM-DD");
+      searchOption.dateRangeData.grantDate.to = end.format("YYYY-MM-DD");
+    }
+  );
+</script>

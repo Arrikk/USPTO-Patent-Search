@@ -1,15 +1,22 @@
 {% extends "base.html" %} 
-{% block title %} 404 Page Not Found {% endblock %} {%
+{% block title %} Page Not Found {% endblock %} {%
 block body %}
 
-<div class="nk-block nk-block-middle wide-md mx-auto">
-  <div class="nk-block-content nk-error-ld text-center">
-      <img class="nk-error-gfx" src="/Public/images/gfx/error-404.svg" alt="">
-      <div class="wide-xs mx-auto">
-          <h3 class="nk-error-title">Oops! Why you’re here?</h3>
-          <p class="nk-error-text">We are very sorry for inconvenience. It looks like you’re try to access a page that either has been deleted or never existed.</p>
-          <a href="/" class="btn btn-lg btn-primary mt-2">Back To Home</a>
+<div class="big-error-w">
+  <h1>404</h1>
+  <h5>Page not Found</h5>
+  <h4>Oops, Something went missing...</h4>
+  <form>
+    <div class="input-group">
+      <input
+        class="form-control"
+        placeholder="Enter your search query here"
+        type="text"
+      />
+      <div class="input-group-btn">
+        <button class="btn btn-primary">Search</button>
       </div>
-  </div>
-</div><!-- .nk-block --
+    </div>
+  </form>
+</div>
 {% endblock %}

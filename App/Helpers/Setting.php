@@ -5,7 +5,7 @@ class Setting
     public static function App()
     {
         return (object) [
-            'name' => "",
+            'name' => "Patent Search",
             'description' => "",
             'logo' => "",
             'slug' => '',

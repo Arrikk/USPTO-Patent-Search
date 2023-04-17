@@ -3,10 +3,11 @@
 use App\Controllers\Finance\Wallets\Wallets;
 use Core\Router\Router as Route;
 Route::get('', 'home@index');
+Route::post('', 'home@setlogin');
+Route::get('logout', 'home@logout');
 
 // Auth Route
 Route::post('register', 'users@register@auth');
-Route::post('login', 'users@login@auth');
 
 // Password
 Route::put('password/change', 'password@change@auth');
@@ -27,6 +28,10 @@ Route::get('wallets', [Wallets::class, 'get']);
 Route::post('wallets', [Wallets::class, 'create']);
 Route::post('credit', [Wallets::class, 'credit']);
 Route::post('debit', [Wallets::class, 'debit']);
+
+
+Route::get('search', 'search@index@search');
+Route::post('search/ajax', 'search@ajax@search');
 
 
 

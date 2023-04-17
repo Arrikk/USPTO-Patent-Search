@@ -1,0 +1,129 @@
+{% extends "base.html" %} {% block title %} {{ title }} {% endblock %} {% block
+body %}
+
+<div class="nk-block nk-block-middle nk-auth-body wide-xs">
+  <div class="brand-logo pb-4 text-center">
+    <a href="javascript:;" class="logo-link">
+      <!-- <img
+        class="logo-light logo-img logo-img-lg"
+        src="/Public/images/logo.png"
+        srcset="/Public/images/logo2x.png 2x"
+        alt="logo"
+      />
+      <img
+        class="logo-dark logo-img logo-img-lg"
+        src="/Public/images/logo-dark.png"
+        srcset="/Public/images/logo-dark2x.png 2x"
+        alt="logo-dark"
+      /> -->
+    </a>
+  </div>
+  <div class="card">
+    <div class="card-inner card-inner-lg">
+      <!-- <div class="nk-block-head">
+        <div class="nk-block-head-content">
+          <h4 class="nk-block-title">Sign-in</h4>
+          <div class="nk-block-des">
+            <p>Verify Credentials to continue</p>
+          </div>
+        </div>
+      </div> -->
+      <form method="POST" id="loginForm">
+        <div class="form-group">
+          <div class="form-label-group">
+            <label class="form-label" for="default-01">Email</label>
+          </div>
+          <div class="form-control-wrap">
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="email"
+              placeholder="dev@bruiz.me"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label-group">
+            <label class="form-label" for="password">Password</label>
+            <!-- <a class="link link-primary link-sm" href="/auth/forgot"
+              >{{ fgCode }}?</a
+            > -->
+          </div>
+          <div class="form-control-wrap">
+            <a
+              href="#"
+              class="form-icon form-icon-right passcode-switch lg"
+              data-target="password"
+            >
+              <em class="passcode-icon icon-show icon ni ni-eye"></em>
+              <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+            </a>
+            <input
+              type="password"
+              class="form-control form-control-lg"
+              id="password"
+              placeholder="*****"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block" id="btn">
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% block script %}
+<script>
+  let loading = false;
+  let btn = $("#btn");
+
+  function setLoader(load = false) {
+    loading = load;
+    loading
+      ? btn.html(`
+        <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div> Sign in
+        `)
+      : btn.html(`Sign in`);
+  }
+
+  $("#loginForm").on("submit", function (e) {
+    e.preventDefault();
+
+    let form = $(this);
+    let login = $("#email").val();
+    let password = $("#password").val();
+
+    const data = {
+      login,
+      password,
+    };
+
+    if (email == "" || password == "") {
+      toastr.clear();
+      NioApp.Toast("Please Complete the fields.", "info");
+    } else {
+      setLoader(true);
+      axios
+        .post("/", data)
+        .then((res) => {
+          setLoader();
+          // localStorage.setItem("token", res.data.token);
+          NioApp.Toast("Successfully Loggedin", "success");
+          location.href = "/search";
+        })
+        .catch((err) => {
+          toastr.clear();
+          setLoader();
+          let error = err.response.data.error;
+          NioApp.Toast("Invalid Credentials", "error");
+        });
+    }
+  });
+</script>
+{% endblock %}
