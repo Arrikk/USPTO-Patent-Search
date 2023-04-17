@@ -17,7 +17,7 @@ class Home extends Controller
    */
     public function index()
     {
-      View::render('auth/login.html', ['title' => 'Login']);
+      View::page('auth/login.html', ['title' => 'Login']);
     }
     /**
      * Set Login Session Controller
