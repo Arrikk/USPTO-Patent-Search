@@ -45,7 +45,7 @@ class Search extends SearchPipe
         $results[$i] = [
          '<p style="white-space:normal;max-width:90%">'.$result->inventionTitle ?? '--' . '</p>',
           $result->patentNumber ?? '--',
-          date('y-m-d', strtotime($result->grantDate)),
+          $result->grantDate ?? '--',
           $result->licenseeContactEmailAddressText ?? '--',
           $result->licenseeContactPhoneNumber ?? '--',
           $result->firstInventorName ?? '--',
