@@ -51,7 +51,7 @@
        <tr>
         <td><p style="white-space:normal;max-width:90%">${e.inventionTitle ?? "--"}</p></td>
         <td>${e.patentNumber ?? "--"}</td>
-        <td>${bz.dateF(e.grantDate)}</td>
+        <td>${e.grantDate ? bz.dateF(e.grantDate) : '--'}</td>
         <td class="lively">${e.licenseeContactEmailAddressText ?? "--"}</td>
         <td class="lively">${e.licenseeContactPhoneNumber ?? "--"}</td>
         <td>${e.firstInventorName ?? "--"}</td>
