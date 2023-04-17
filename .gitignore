@@ -24,5 +24,4 @@ node_modules
 /Public/files/*
 /vendor
 !.gitkeep
-/.env
 
