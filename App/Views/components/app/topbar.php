@@ -17,12 +17,7 @@ use App\Helpers\Setting;
             <div class="nk-header-menu">
                 <ul class="nk-menu nk-menu-main">
                     <li class="nk-menu-item">
-                        <a href="/confirmation" class="nk-menu-link">
-                            <span class="nk-menu-text"><?= translate('supply status confirmation') ?><span>
-                        </a>
-                    </li><!-- .nk-menu-item -->
-                    <li class="nk-menu-item">
-                        <a href="/dashboard" class="nk-menu-link">
+                        <a href="/search" class="nk-menu-link">
                             <span class="nk-menu-text">Search Patents</span>
                         </a>
                     </li>

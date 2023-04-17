@@ -3,7 +3,7 @@
 <div class="nk-block-head">
     <div class="nk-block-between">
         <div class="nk-block-head-content">
-            <input type="text" id="dates" placeholder="search" class="form-control" />
+            <input type="text" id="dates" placeholder="020-01-01 - 2022-03-04" value="" class="form-control" />
             <!-- <h3 class="nk-block-title page-title"> Search Patents</h3>
         
          -->
